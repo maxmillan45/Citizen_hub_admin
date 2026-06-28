@@ -46,11 +46,11 @@ function AdminLayout() {
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh', width: '100%', background: '#f5f5f5' }}>
-      {/* Sidebar - Kenyan Flag Colors */}
+      {/* Sidebar - Kenyan Colors */}
       <div style={{
-        width: sidebarOpen ? '260px' : '72px',
-        backgroundColor: '#1a1a1a',
-        color: 'white',
+        width: sidebarOpen ? '240px' : '72px',
+        background: '#ffffff',
+        color: '#1a1a1a',
         transition: 'width 0.3s ease',
         position: 'fixed',
         height: '100vh',
@@ -58,23 +58,22 @@ function AdminLayout() {
         zIndex: 1000,
         top: 0,
         left: 0,
-        borderRight: '3px solid #BB0000'
+        borderRight: '1px solid #e0e0e0',
+        boxShadow: '2px 0 8px rgba(0,0,0,0.05)'
       }}>
-        {/* Header with Kenyan Flag stripe */}
+        {/* Header */}
         <div style={{
           padding: '16px 20px',
-          borderBottom: '1px solid rgba(255,255,255,0.1)',
-          background: 'linear-gradient(135deg, #1a1a1a 0%, #1a1a1a 70%, #BB0000 100%)'
+          borderBottom: '1px solid #e0e0e0',
+          background: 'white'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <span style={{
-              fontSize: '18px',
+              fontSize: '16px',
               fontWeight: '700',
               whiteSpace: 'nowrap',
               overflow: 'hidden',
-              background: 'linear-gradient(to right, #006B3F, #BB0000, #006B3F)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
+              color: '#006B3F'
             }}>
               {sidebarOpen ? 'Citizen Hub Admin' : 'CH'}
             </span>
@@ -83,7 +82,7 @@ function AdminLayout() {
               style={{
                 background: 'none',
                 border: 'none',
-                color: 'white',
+                color: '#1a1a1a',
                 cursor: 'pointer',
                 fontSize: '18px'
               }}
@@ -91,7 +90,7 @@ function AdminLayout() {
               {sidebarOpen ? <FiX size={20} /> : <FiMenu size={20} />}
             </button>
           </div>
-          {/* Kenyan flag colors stripe */}
+          {/* Kenyan flag stripe */}
           <div style={{
             height: '3px',
             background: 'linear-gradient(to right, #006B3F 33%, #BB0000 33%, #BB0000 66%, #006B3F 66%)',
@@ -113,13 +112,14 @@ function AdminLayout() {
                   alignItems: 'center',
                   gap: '12px',
                   padding: sidebarOpen ? '12px 20px' : '12px 16px',
-                  backgroundColor: isActive ? 'rgba(255,255,255,0.08)' : 'transparent',
-                  color: isActive ? 'white' : 'rgba(255,255,255,0.7)',
+                  background: isActive ? '#e8f5e9' : 'transparent',
+                  color: isActive ? '#006B3F' : '#555',
                   textDecoration: 'none',
                   transition: 'all 0.2s ease',
                   borderLeft: isActive ? '3px solid #BB0000' : '3px solid transparent',
                   justifyContent: sidebarOpen ? 'flex-start' : 'center',
-                  fontSize: '14px'
+                  fontSize: '14px',
+                  fontWeight: isActive ? '600' : '400'
                 }}
               >
                 <Icon size={20} style={{ flexShrink: 0 }} />
@@ -135,8 +135,8 @@ function AdminLayout() {
           left: 0,
           right: 0,
           padding: '16px 20px',
-          borderTop: '1px solid rgba(255,255,255,0.1)',
-          background: 'linear-gradient(to top, #1a1a1a 50%, transparent)'
+          borderTop: '1px solid #e0e0e0',
+          background: 'white'
         }}>
           <div style={{
             display: 'flex',
@@ -145,13 +145,24 @@ function AdminLayout() {
             marginBottom: '12px',
             overflow: 'hidden'
           }}>
-            <FiUser size={20} style={{ flexShrink: 0 }} />
+            <div style={{
+              width: '36px',
+              height: '36px',
+              borderRadius: '50%',
+              background: '#e8f5e9',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0
+            }}>
+              <FiUser size={18} color="#006B3F" />
+            </div>
             {sidebarOpen && (
               <div style={{ overflow: 'hidden' }}>
-                <div style={{ fontSize: '14px', fontWeight: '500' }}>
+                <div style={{ fontSize: '13px', fontWeight: '600', color: '#1a1a1a' }}>
                   {user?.phone_number || 'Admin'}
                 </div>
-                <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>
+                <div style={{ fontSize: '11px', color: '#666' }}>
                   Administrator
                 </div>
               </div>
@@ -164,18 +175,19 @@ function AdminLayout() {
               alignItems: 'center',
               gap: '8px',
               padding: '8px 16px',
-              background: 'rgba(187, 0, 0, 0.3)',
+              background: '#ffebee',
               border: 'none',
               borderRadius: '8px',
-              color: 'white',
+              color: '#BB0000',
               cursor: 'pointer',
               width: '100%',
-              fontSize: '14px',
+              fontSize: '13px',
+              fontWeight: '500',
               transition: 'all 0.3s ease',
               justifyContent: sidebarOpen ? 'flex-start' : 'center'
             }}
-            onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(187, 0, 0, 0.5)'}
-            onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(187, 0, 0, 0.3)'}
+            onMouseEnter={(e) => e.currentTarget.style.background = '#ffcdd2'}
+            onMouseLeave={(e) => e.currentTarget.style.background = '#ffebee'}
           >
             <FiLogOut size={16} />
             {sidebarOpen && <span>Sign Out</span>}
@@ -185,7 +197,7 @@ function AdminLayout() {
 
       {/* Main Content */}
       <div style={{
-        marginLeft: sidebarOpen ? '260px' : '72px',
+        marginLeft: sidebarOpen ? '240px' : '72px',
         flex: 1,
         transition: 'margin-left 0.3s ease',
         padding: '24px',

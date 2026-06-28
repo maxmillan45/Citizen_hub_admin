@@ -113,7 +113,7 @@ function Login() {
 
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', marginBottom: '6px', fontWeight: '600', fontSize: '14px' }}>
+            <label style={{ display: 'block', marginBottom: '6px', fontWeight: '600', fontSize: '14px', color: '#1a1a1a' }}>
               Phone Number
             </label>
             <div style={{ position: 'relative' }}>
@@ -126,21 +126,38 @@ function Login() {
               }} />
               <input
                 type="tel"
-                className="input-field"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, ''))}
                 placeholder="254705366313"
                 required
-                style={{ paddingLeft: '36px' }}
+                style={{
+                  width: '100%',
+                  padding: '12px 12px 12px 36px',
+                  border: '1px solid #ccc',
+                  borderRadius: '8px',
+                  fontSize: '16px',
+                  backgroundColor: 'white',
+                  color: '#1a1a1a'
+                }}
               />
             </div>
           </div>
 
           <button
             type="submit"
-            className="btn-primary"
             disabled={loading}
-            style={{ width: '100%', justifyContent: 'center', padding: '14px' }}
+            style={{
+              width: '100%',
+              padding: '14px',
+              backgroundColor: '#006B3F',
+              color: 'white',
+              border: 'none',
+              borderRadius: '8px',
+              fontSize: '16px',
+              fontWeight: '600',
+              cursor: loading ? 'not-allowed' : 'pointer',
+              opacity: loading ? 0.7 : 1
+            }}
           >
             {loading ? 'Signing in...' : 'Sign In'}
           </button>

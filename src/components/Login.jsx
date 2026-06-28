@@ -7,6 +7,7 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const API_URL = 'https://citizen-hub-kenya-backend.onrender.com';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,13 +15,16 @@ function Login() {
     setError(null);
 
     try {
-      const response = await fetch('https://citizen-hub-kenya-backend.onrender.com/api/get-token/', {
+      console.log('Logging in with:', phoneNumber);
+      
+      const response = await fetch(`${API_URL}/api/get-token/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone_number: phoneNumber })
       });
 
       const data = await response.json();
+      console.log('Login response:', data);
 
       if (response.ok && data.access_token) {
         if (!data.is_superuser && !data.is_staff) {
@@ -39,6 +43,7 @@ function Login() {
         setError(data.error || 'Login failed. Please try again.');
       }
     } catch (err) {
+      console.error('Login error:', err);
       setError('Network error. Please try again.');
     } finally {
       setLoading(false);
@@ -76,12 +81,7 @@ function Login() {
           }}>
             <FiUser size={36} color="#006B3F" />
           </div>
-          <h1 style={{
-            fontSize: '28px',
-            fontWeight: '700',
-            color: '#1a1a1a',
-            marginBottom: '4px'
-          }}>
+          <h1 style={{ fontSize: '28px', fontWeight: '700', color: '#1a1a1a', marginBottom: '4px' }}>
             Citizen Hub
           </h1>
           <p style={{ color: '#666', fontSize: '14px' }}>Admin Panel</p>
@@ -113,13 +113,7 @@ function Login() {
 
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: '20px' }}>
-            <label style={{
-              display: 'block',
-              marginBottom: '6px',
-              fontWeight: '600',
-              fontSize: '14px',
-              color: '#1a1a1a'
-            }}>
+            <label style={{ display: 'block', marginBottom: '6px', fontWeight: '600', fontSize: '14px' }}>
               Phone Number
             </label>
             <div style={{ position: 'relative' }}>

@@ -5,6 +5,7 @@ function Dashboard() {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const API_URL = 'https://citizen-hub-kenya-backend.onrender.com';
 
   useEffect(() => {
     fetchStats();
@@ -13,13 +14,27 @@ function Dashboard() {
   const fetchStats = async () => {
     try {
       const token = localStorage.getItem('access_token');
-      const response = await fetch('https://citizen-hub-kenya-backend.onrender.com/api/auth/admin-panel/dashboard/', {
-        headers: { 'Authorization': `Bearer ${token}` }
+      console.log('Token:', token);
+      
+      const response = await fetch(`${API_URL}/api/auth/admin-panel/dashboard/`, {
+        headers: { 
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
       });
+      
+      console.log('Response status:', response.status);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
+      console.log('Dashboard data:', data);
       setStats(data);
     } catch (err) {
-      setError('Failed to load dashboard data');
+      console.error('Error fetching stats:', err);
+      setError(err.message || 'Failed to load dashboard data');
     } finally {
       setLoading(false);
     }
@@ -38,6 +53,7 @@ function Dashboard() {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '300px' }}>
         <div className="spinner"></div>
+        <p style={{ marginLeft: '16px' }}>Loading dashboard...</p>
       </div>
     );
   }
@@ -45,7 +61,7 @@ function Dashboard() {
   if (error) {
     return (
       <div style={{ color: '#BB0000', textAlign: 'center', padding: '40px' }}>
-        <p>{error}</p>
+        <p>Error: {error}</p>
         <button className="btn-secondary" onClick={fetchStats}>Retry</button>
       </div>
     );
@@ -61,7 +77,7 @@ function Dashboard() {
           const Icon = card.icon;
           return (
             <div className="stat-card" key={index}>
-              <div className="stat-icon" style={{ background: `${card.color}15` }}>
+              <div className="stat-icon" style={{ background: `${card.color}15`, padding: '8px', borderRadius: '8px', display: 'inline-block', marginBottom: '8px' }}>
                 <Icon size={24} color={card.color} />
               </div>
               <div className="stat-value" style={{ color: card.color }}>{card.value}</div>
@@ -70,33 +86,6 @@ function Dashboard() {
           );
         })}
       </div>
-
-      {stats?.recent_activity && (
-        <div className="grid-2">
-          <div className="card">
-            <h3 style={{ marginBottom: '16px', fontSize: '16px' }}>Recent Users</h3>
-            {stats.recent_activity.new_users?.map((user, i) => (
-              <div key={i} style={{ padding: '8px 0', borderBottom: '1px solid #e0e0e0' }}>
-                <span>{user.phone_number}</span>
-                <span style={{ fontSize: '12px', color: '#666', marginLeft: '12px' }}>
-                  {new Date(user.date_joined).toLocaleDateString()}
-                </span>
-              </div>
-            ))}
-          </div>
-          <div className="card">
-            <h3 style={{ marginBottom: '16px', fontSize: '16px' }}>Recent Crime Reports</h3>
-            {stats.recent_activity.recent_crimes?.map((crime, i) => (
-              <div key={i} style={{ padding: '8px 0', borderBottom: '1px solid #e0e0e0' }}>
-                <span>{crime.category}</span>
-                <span className="badge badge-info" style={{ marginLeft: '12px' }}>
-                  {crime.status}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 }

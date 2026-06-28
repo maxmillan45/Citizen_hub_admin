@@ -48,118 +48,76 @@ function Scraping() {
     }
   };
 
-  if (loading) return <p>Loading scraping logs...</p>;
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+        <div className="spinner"></div>
+      </div>
+    );
+  }
 
   return (
     <div>
-      <h2>Data Scraping</h2>
+      <h1 className="admin-page-title">Data Scraping</h1>
+      <p className="admin-page-subtitle">Manage data scraping from external sources</p>
+
       <div style={{ display: 'flex', gap: '12px', marginBottom: '20px', flexWrap: 'wrap' }}>
         <button
+          className="btn-primary"
           onClick={() => triggerScrape('mps')}
           disabled={scraping}
-          style={{
-            padding: '10px 20px',
-            backgroundColor: '#006B3F',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: scraping ? 'not-allowed' : 'pointer',
-            opacity: scraping ? 0.7 : 1
-          }}
+          style={{ background: 'var(--primary)' }}
         >
           Scrape MPs
         </button>
         <button
+          className="btn-primary"
           onClick={() => triggerScrape('constitution')}
           disabled={scraping}
-          style={{
-            padding: '10px 20px',
-            backgroundColor: '#17a2b8',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: scraping ? 'not-allowed' : 'pointer',
-            opacity: scraping ? 0.7 : 1
-          }}
+          style={{ background: '#17a2b8' }}
         >
           Scrape Constitution
         </button>
         <button
+          className="btn-primary"
           onClick={() => triggerScrape('all')}
           disabled={scraping}
-          style={{
-            padding: '10px 20px',
-            backgroundColor: '#6f42c1',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: scraping ? 'not-allowed' : 'pointer',
-            opacity: scraping ? 0.7 : 1
-          }}
+          style={{ background: '#6f42c1' }}
         >
           Scrape All
         </button>
-        <button
-          onClick={fetchLogs}
-          style={{
-            padding: '10px 20px',
-            backgroundColor: '#6c757d',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: 'pointer'
-          }}
-        >
+        <button className="btn-secondary" onClick={fetchLogs}>
           Refresh Logs
         </button>
       </div>
 
       {message && (
-        <div style={{
-          padding: '12px',
-          backgroundColor: '#e8f5e9',
-          borderRadius: '8px',
-          marginBottom: '16px',
-          color: '#2e7d32'
-        }}>
-          {message}
+        <div className="card" style={{ background: '#E8F5E9', borderColor: '#C8E6C9', marginBottom: '16px' }}>
+          <span style={{ color: '#2E7D32' }}>{message}</span>
         </div>
       )}
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
         {logs.map((log) => (
-          <div key={log.id} style={{
-            background: 'white',
-            borderRadius: '12px',
-            padding: '16px 20px',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-            border: '1px solid #f0f0f0'
-          }}>
+          <div className="card" key={log.id}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
                 <span style={{ fontWeight: '500' }}>{log.source}</span>
-                <span style={{
-                  marginLeft: '12px',
-                  padding: '2px 10px',
-                  borderRadius: '12px',
-                  fontSize: '11px',
-                  backgroundColor: log.status === 'success' ? '#e8f5e9' : '#ffebee',
-                  color: log.status === 'success' ? '#2e7d32' : '#c62828'
-                }}>
+                <span className={`badge ${log.status === 'success' ? 'badge-success' : 'badge-danger'}`} style={{ marginLeft: '12px' }}>
                   {log.status}
                 </span>
                 {log.items_scraped > 0 && (
-                  <span style={{ marginLeft: '12px', fontSize: '13px', color: '#6c757d' }}>
+                  <span style={{ marginLeft: '12px', fontSize: '13px', color: 'var(--gray)' }}>
                     {log.items_scraped} items scraped
                   </span>
                 )}
               </div>
-              <span style={{ fontSize: '12px', color: '#6c757d' }}>
+              <span style={{ fontSize: '12px', color: 'var(--gray)' }}>
                 {log.started_at ? new Date(log.started_at).toLocaleString() : 'N/A'}
               </span>
             </div>
             {log.error_message && (
-              <p style={{ fontSize: '13px', color: '#c62828', marginTop: '4px' }}>{log.error_message}</p>
+              <p style={{ fontSize: '13px', color: 'var(--secondary)', marginTop: '4px' }}>{log.error_message}</p>
             )}
           </div>
         ))}

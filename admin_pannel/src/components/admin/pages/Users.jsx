@@ -23,52 +23,48 @@ function Users() {
     }
   };
 
-  if (loading) return <p>Loading users...</p>;
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+        <div className="spinner"></div>
+      </div>
+    );
+  }
 
   return (
     <div>
-      <h2>Users ({users.length})</h2>
-      <div style={{ overflowX: 'auto' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', background: 'white', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
+      <h1 className="admin-page-title">Users</h1>
+      <p className="admin-page-subtitle">Manage all users ({users.length})</p>
+
+      <div className="table-container">
+        <table className="table">
           <thead>
-            <tr style={{ background: '#f5f7fa' }}>
-              <th style={{ padding: '12px 16px', textAlign: 'left' }}>Phone</th>
-              <th style={{ padding: '12px 16px', textAlign: 'left' }}>Email</th>
-              <th style={{ padding: '12px 16px', textAlign: 'left' }}>Type</th>
-              <th style={{ padding: '12px 16px', textAlign: 'left' }}>Score</th>
-              <th style={{ padding: '12px 16px', textAlign: 'left' }}>Status</th>
-              <th style={{ padding: '12px 16px', textAlign: 'left' }}>Joined</th>
+            <tr>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>Type</th>
+              <th>Score</th>
+              <th>Status</th>
+              <th>Joined</th>
             </tr>
           </thead>
           <tbody>
             {users.map((user) => (
-              <tr key={user.id} style={{ borderBottom: '1px solid #f0f0f0' }}>
-                <td style={{ padding: '12px 16px' }}>{user.phone_number}</td>
-                <td style={{ padding: '12px 16px' }}>{user.email || '-'}</td>
-                <td style={{ padding: '12px 16px' }}>
-                  <span style={{
-                    padding: '2px 10px',
-                    borderRadius: '12px',
-                    fontSize: '12px',
-                    backgroundColor: user.account_type === 'premium' ? '#e8f5e9' : '#f5f5f5',
-                    color: user.account_type === 'premium' ? '#2e7d32' : '#666'
-                  }}>
+              <tr key={user.id}>
+                <td>{user.phone_number}</td>
+                <td>{user.email || '-'}</td>
+                <td>
+                  <span className={`badge ${user.account_type === 'premium' ? 'badge-success' : 'badge-gray'}`}>
                     {user.account_type || 'free'}
                   </span>
                 </td>
-                <td style={{ padding: '12px 16px' }}>{user.civic_score || 0}</td>
-                <td style={{ padding: '12px 16px' }}>
-                  <span style={{
-                    padding: '2px 10px',
-                    borderRadius: '12px',
-                    fontSize: '12px',
-                    backgroundColor: user.is_active ? '#e8f5e9' : '#ffebee',
-                    color: user.is_active ? '#2e7d32' : '#c62828'
-                  }}>
+                <td>{user.civic_score || 0}</td>
+                <td>
+                  <span className={`badge ${user.is_active ? 'badge-success' : 'badge-danger'}`}>
                     {user.is_active ? 'Active' : 'Inactive'}
                   </span>
                 </td>
-                <td style={{ padding: '12px 16px', fontSize: '13px', color: '#666' }}>
+                <td style={{ fontSize: '13px', color: 'var(--gray)' }}>
                   {new Date(user.date_joined).toLocaleDateString()}
                 </td>
               </tr>

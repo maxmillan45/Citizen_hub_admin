@@ -23,34 +23,28 @@ function Faqs() {
     }
   };
 
-  if (loading) return <p>Loading FAQs...</p>;
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+        <div className="spinner"></div>
+      </div>
+    );
+  }
 
   return (
     <div>
-      <h2>FAQs ({faqs.length})</h2>
+      <h1 className="admin-page-title">FAQs</h1>
+      <p className="admin-page-subtitle">Manage all frequently asked questions ({faqs.length})</p>
+
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
         {faqs.map((faq) => (
-          <div key={faq.id} style={{
-            background: 'white',
-            borderRadius: '12px',
-            padding: '16px 20px',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-            border: '1px solid #f0f0f0'
-          }}>
+          <div className="card" key={faq.id}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
               <span style={{ fontWeight: '500' }}>{faq.question}</span>
-              <span style={{
-                padding: '2px 10px',
-                borderRadius: '12px',
-                fontSize: '11px',
-                backgroundColor: '#e3f2fd',
-                color: '#1565c0'
-              }}>
-                {faq.category}
-              </span>
+              <span className="badge badge-info">{faq.category}</span>
             </div>
-            <p style={{ color: '#495057', fontSize: '14px' }}>{faq.answer}</p>
-            <div style={{ display: 'flex', gap: '16px', marginTop: '8px', fontSize: '12px', color: '#6c757d' }}>
+            <p style={{ color: 'var(--dark)', fontSize: '14px' }}>{faq.answer}</p>
+            <div style={{ display: 'flex', gap: '16px', marginTop: '8px', fontSize: '12px', color: 'var(--gray)' }}>
               <span>Views: {faq.views}</span>
               <span>Helpful: {faq.helpful_count}</span>
               <span>Not Helpful: {faq.not_helpful_count}</span>

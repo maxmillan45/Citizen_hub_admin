@@ -40,63 +40,61 @@ function Crimes() {
     }
   };
 
-  const getStatusColor = (status) => {
-    const colors = {
-      'pending': '#ffc107',
-      'investigating': '#17a2b8',
-      'resolved': '#28a745',
-      'dismissed': '#dc3545'
+  const getStatusBadge = (status) => {
+    const badges = {
+      'pending': 'badge-warning',
+      'investigating': 'badge-info',
+      'resolved': 'badge-success',
+      'dismissed': 'badge-danger'
     };
-    return colors[status] || '#6c757d';
+    return badges[status] || 'badge-gray';
   };
 
-  if (loading) return <p>Loading crime reports...</p>;
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+        <div className="spinner"></div>
+      </div>
+    );
+  }
 
   return (
     <div>
-      <h2>Crime Reports ({reports.length})</h2>
-      <div style={{ overflowX: 'auto' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', background: 'white', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
+      <h1 className="admin-page-title">Crime Reports</h1>
+      <p className="admin-page-subtitle">Manage all crime reports ({reports.length})</p>
+
+      <div className="table-container">
+        <table className="table">
           <thead>
-            <tr style={{ background: '#f5f7fa' }}>
-              <th style={{ padding: '12px 16px', textAlign: 'left' }}>Category</th>
-              <th style={{ padding: '12px 16px', textAlign: 'left' }}>Location</th>
-              <th style={{ padding: '12px 16px', textAlign: 'left' }}>Status</th>
-              <th style={{ padding: '12px 16px', textAlign: 'left' }}>Reported By</th>
-              <th style={{ padding: '12px 16px', textAlign: 'left' }}>Date</th>
-              <th style={{ padding: '12px 16px', textAlign: 'left' }}>Action</th>
+            <tr>
+              <th>Category</th>
+              <th>Location</th>
+              <th>Status</th>
+              <th>Reported By</th>
+              <th>Date</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {reports.map((report) => (
-              <tr key={report.id} style={{ borderBottom: '1px solid #f0f0f0' }}>
-                <td style={{ padding: '12px 16px' }}>{report.category}</td>
-                <td style={{ padding: '12px 16px' }}>{report.location}</td>
-                <td style={{ padding: '12px 16px' }}>
-                  <span style={{
-                    padding: '2px 10px',
-                    borderRadius: '12px',
-                    fontSize: '12px',
-                    backgroundColor: `${getStatusColor(report.status)}20`,
-                    color: getStatusColor(report.status)
-                  }}>
+              <tr key={report.id}>
+                <td style={{ textTransform: 'capitalize' }}>{report.category}</td>
+                <td>{report.location}</td>
+                <td>
+                  <span className={`badge ${getStatusBadge(report.status)}`}>
                     {report.status}
                   </span>
                 </td>
-                <td style={{ padding: '12px 16px' }}>{report.reported_by?.phone_number || 'Unknown'}</td>
-                <td style={{ padding: '12px 16px', fontSize: '13px', color: '#666' }}>
+                <td>{report.reported_by?.phone_number || 'Unknown'}</td>
+                <td style={{ fontSize: '13px', color: 'var(--gray)' }}>
                   {new Date(report.created_at).toLocaleDateString()}
                 </td>
-                <td style={{ padding: '12px 16px' }}>
+                <td>
                   <select
+                    className="input-field"
                     value={report.status}
                     onChange={(e) => updateStatus(report.id, e.target.value)}
-                    style={{
-                      padding: '4px 8px',
-                      border: '1px solid #ddd',
-                      borderRadius: '4px',
-                      fontSize: '12px'
-                    }}
+                    style={{ padding: '4px 8px', fontSize: '12px', width: '120px' }}
                   >
                     <option value="pending">Pending</option>
                     <option value="investigating">Investigating</option>

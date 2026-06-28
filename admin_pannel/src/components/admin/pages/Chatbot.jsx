@@ -23,40 +23,36 @@ function AdminChatbot() {
     }
   };
 
-  if (loading) return <p>Loading conversations...</p>;
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+        <div className="spinner"></div>
+      </div>
+    );
+  }
 
   return (
     <div>
-      <h2>Chatbot Conversations ({conversations.length})</h2>
+      <h1 className="admin-page-title">Chatbot Conversations</h1>
+      <p className="admin-page-subtitle">Review all AI legal assistant conversations ({conversations.length})</p>
+
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
         {conversations.map((conv) => (
-          <div key={conv.id} style={{
-            background: 'white',
-            borderRadius: '12px',
-            padding: '16px 20px',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-            border: '1px solid #f0f0f0'
-          }}>
+          <div className="card" key={conv.id}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
               <span style={{ fontWeight: '500' }}>
                 {conv.user?.phone_number || 'Unknown User'}
               </span>
-              <span style={{ fontSize: '12px', color: '#6c757d' }}>
+              <span style={{ fontSize: '12px', color: 'var(--gray)' }}>
                 {new Date(conv.created_at).toLocaleString()}
               </span>
             </div>
             <p style={{ marginBottom: '4px', fontWeight: '500' }}>Q: {conv.question}</p>
-            <p style={{ color: '#495057', fontSize: '14px' }}>A: {conv.answer}</p>
-            {conv.sources && (
-              <div style={{ marginTop: '8px', display: 'flex', gap: '8px' }}>
+            <p style={{ color: 'var(--dark)', fontSize: '14px' }}>A: {conv.answer}</p>
+            {conv.sources && conv.sources.length > 0 && (
+              <div style={{ marginTop: '8px', display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                 {conv.sources.map((source, i) => (
-                  <span key={i} style={{
-                    padding: '2px 8px',
-                    background: '#e3f2fd',
-                    borderRadius: '4px',
-                    fontSize: '11px',
-                    color: '#1565c0'
-                  }}>
+                  <span key={i} className="badge badge-info">
                     Article {source}
                   </span>
                 ))}

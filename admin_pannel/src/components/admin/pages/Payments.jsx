@@ -23,42 +23,44 @@ function Payments() {
     }
   };
 
-  if (loading) return <p>Loading payments...</p>;
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+        <div className="spinner"></div>
+      </div>
+    );
+  }
 
   return (
     <div>
-      <h2>Payments ({payments.length})</h2>
-      <div style={{ overflowX: 'auto' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', background: 'white', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
+      <h1 className="admin-page-title">Payments</h1>
+      <p className="admin-page-subtitle">View all M-Pesa transactions ({payments.length})</p>
+
+      <div className="table-container">
+        <table className="table">
           <thead>
-            <tr style={{ background: '#f5f7fa' }}>
-              <th style={{ padding: '12px 16px', textAlign: 'left' }}>Phone</th>
-              <th style={{ padding: '12px 16px', textAlign: 'left' }}>Amount</th>
-              <th style={{ padding: '12px 16px', textAlign: 'left' }}>Reference</th>
-              <th style={{ padding: '12px 16px', textAlign: 'left' }}>Receipt</th>
-              <th style={{ padding: '12px 16px', textAlign: 'left' }}>Status</th>
-              <th style={{ padding: '12px 16px', textAlign: 'left' }}>Date</th>
+            <tr>
+              <th>Phone</th>
+              <th>Amount</th>
+              <th>Reference</th>
+              <th>Receipt</th>
+              <th>Status</th>
+              <th>Date</th>
             </tr>
           </thead>
           <tbody>
             {payments.map((payment) => (
-              <tr key={payment.id} style={{ borderBottom: '1px solid #f0f0f0' }}>
-                <td style={{ padding: '12px 16px' }}>{payment.phone_number}</td>
-                <td style={{ padding: '12px 16px', fontWeight: 'bold' }}>KES {payment.amount}</td>
-                <td style={{ padding: '12px 16px' }}>{payment.account_reference}</td>
-                <td style={{ padding: '12px 16px' }}>{payment.mpesa_receipt_number || '-'}</td>
-                <td style={{ padding: '12px 16px' }}>
-                  <span style={{
-                    padding: '2px 10px',
-                    borderRadius: '12px',
-                    fontSize: '12px',
-                    backgroundColor: payment.is_completed ? '#e8f5e9' : '#fff3e0',
-                    color: payment.is_completed ? '#2e7d32' : '#e65100'
-                  }}>
+              <tr key={payment.id}>
+                <td>{payment.phone_number}</td>
+                <td style={{ fontWeight: 'bold' }}>KES {payment.amount}</td>
+                <td>{payment.account_reference}</td>
+                <td>{payment.mpesa_receipt_number || '-'}</td>
+                <td>
+                  <span className={`badge ${payment.is_completed ? 'badge-success' : 'badge-warning'}`}>
                     {payment.is_completed ? 'Completed' : 'Pending'}
                   </span>
                 </td>
-                <td style={{ padding: '12px 16px', fontSize: '13px', color: '#666' }}>
+                <td style={{ fontSize: '13px', color: 'var(--gray)' }}>
                   {new Date(payment.created_at).toLocaleDateString()}
                 </td>
               </tr>

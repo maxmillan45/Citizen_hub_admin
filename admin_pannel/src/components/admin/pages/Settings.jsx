@@ -23,50 +23,52 @@ function Settings() {
     }
   };
 
-  if (loading) return <p>Loading settings...</p>;
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+        <div className="spinner"></div>
+      </div>
+    );
+  }
 
   return (
     <div>
-      <h2>System Settings</h2>
-      <div style={{
-        background: 'white',
-        borderRadius: '12px',
-        padding: '24px',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-        border: '1px solid #f0f0f0'
-      }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+      <h1 className="admin-page-title">System Settings</h1>
+      <p className="admin-page-subtitle">View and manage system configuration</p>
+
+      <div className="card">
+        <div className="grid-2">
           <div>
             <label style={{ display: 'block', fontWeight: '500', marginBottom: '4px' }}>Debug Mode</label>
-            <span style={{
-              padding: '2px 10px',
-              borderRadius: '12px',
-              fontSize: '13px',
-              backgroundColor: settings?.debug ? '#ffebee' : '#e8f5e9',
-              color: settings?.debug ? '#c62828' : '#2e7d32'
-            }}>
+            <span className={`badge ${settings?.debug ? 'badge-danger' : 'badge-success'}`}>
               {settings?.debug ? 'Enabled' : 'Disabled'}
             </span>
           </div>
           <div>
             <label style={{ display: 'block', fontWeight: '500', marginBottom: '4px' }}>Maintenance Mode</label>
-            <span style={{
-              padding: '2px 10px',
-              borderRadius: '12px',
-              fontSize: '13px',
-              backgroundColor: settings?.maintenance_mode ? '#ffebee' : '#e8f5e9',
-              color: settings?.maintenance_mode ? '#c62828' : '#2e7d32'
-            }}>
+            <span className={`badge ${settings?.maintenance_mode ? 'badge-danger' : 'badge-success'}`}>
               {settings?.maintenance_mode ? 'Enabled' : 'Disabled'}
             </span>
           </div>
           <div>
             <label style={{ display: 'block', fontWeight: '500', marginBottom: '4px' }}>API Version</label>
-            <span>{settings?.api_version || 'v1'}</span>
+            <span style={{ color: 'var(--dark)' }}>{settings?.api_version || 'v1'}</span>
           </div>
           <div>
             <label style={{ display: 'block', fontWeight: '500', marginBottom: '4px' }}>Timezone</label>
-            <span>{settings?.timezone || 'UTC'}</span>
+            <span style={{ color: 'var(--dark)' }}>{settings?.timezone || 'UTC'}</span>
+          </div>
+          <div>
+            <label style={{ display: 'block', fontWeight: '500', marginBottom: '4px' }}>Allowed Hosts</label>
+            <span style={{ fontSize: '13px', color: 'var(--gray)' }}>
+              {settings?.allowed_hosts?.join(', ') || '-'}
+            </span>
+          </div>
+          <div>
+            <label style={{ display: 'block', fontWeight: '500', marginBottom: '4px' }}>CORS Origins</label>
+            <span style={{ fontSize: '13px', color: 'var(--gray)' }}>
+              {settings?.cors_allowed_origins?.join(', ') || '-'}
+            </span>
           </div>
         </div>
       </div>

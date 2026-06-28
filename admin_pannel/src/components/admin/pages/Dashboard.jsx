@@ -26,72 +26,70 @@ function Dashboard() {
   };
 
   const statCards = stats ? [
-    { icon: FiUsers, label: 'Total Users', value: stats.users?.total || 0, color: '#006B3F' },
-    { icon: FiFlag, label: 'Crime Reports', value: stats.crime_reports?.total || 0, color: '#dc3545' },
+    { icon: FiUsers, label: 'Total Users', value: stats.users?.total || 0, color: 'var(--primary)' },
+    { icon: FiFlag, label: 'Crime Reports', value: stats.crime_reports?.total || 0, color: 'var(--secondary)' },
     { icon: FiHelpCircle, label: 'FAQs', value: stats.faqs?.total || 0, color: '#17a2b8' },
     { icon: FiMessageSquare, label: 'Chat Conversations', value: stats.chatbot?.total_conversations || 0, color: '#6f42c1' },
     { icon: FiDollarSign, label: 'M-Pesa Payments', value: stats.payments?.total || 0, color: '#28a745' },
     { icon: FiBookOpen, label: 'Constitution Articles', value: stats.constitution?.total_articles || 0, color: '#fd7e14' },
   ] : [];
 
-  if (loading) return <p>Loading dashboard...</p>;
-  if (error) return <p style={{ color: 'red' }}>{error}</p>;
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '300px' }}>
+        <div className="spinner"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div style={{ color: 'var(--secondary)', textAlign: 'center', padding: '40px' }}>
+        <p>{error}</p>
+        <button className="btn-secondary" onClick={fetchStats}>Retry</button>
+      </div>
+    );
+  }
 
   return (
     <div>
-      <h1 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '8px' }}>Admin Dashboard</h1>
-      <p style={{ color: '#6c757d', marginBottom: '24px' }}>Overview of your Citizen Hub platform</p>
+      <h1 className="admin-page-title">Admin Dashboard</h1>
+      <p className="admin-page-subtitle">Overview of your Citizen Hub platform</p>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '16px', marginBottom: '32px' }}>
+      <div className="admin-stats-grid">
         {statCards.map((card, index) => {
           const Icon = card.icon;
           return (
-            <div key={index} style={{
-              background: 'white',
-              borderRadius: '12px',
-              padding: '20px',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-              border: '1px solid #f0f0f0'
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
-                <div style={{
-                  width: '40px',
-                  height: '40px',
-                  borderRadius: '8px',
-                  backgroundColor: `${card.color}20`,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                  <Icon size={20} color={card.color} />
-                </div>
-                <span style={{ fontSize: '20px', fontWeight: 'bold' }}>{card.value}</span>
+            <div className="stat-card" key={index}>
+              <div className="stat-icon" style={{ background: `${card.color}20` }}>
+                <Icon size={24} color={card.color} />
               </div>
-              <span style={{ fontSize: '13px', color: '#6c757d' }}>{card.label}</span>
+              <div className="stat-value">{card.value}</div>
+              <div className="stat-label">{card.label}</div>
             </div>
           );
         })}
       </div>
 
       {stats?.recent_activity && (
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
-          <div style={{ background: 'white', borderRadius: '12px', padding: '20px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
+        <div className="grid-2">
+          <div className="card">
             <h3 style={{ marginBottom: '16px', fontSize: '16px' }}>Recent Users</h3>
             {stats.recent_activity.new_users?.map((user, i) => (
-              <div key={i} style={{ padding: '8px 0', borderBottom: '1px solid #f0f0f0' }}>
+              <div key={i} style={{ padding: '8px 0', borderBottom: '1px solid var(--border)' }}>
                 <span>{user.phone_number}</span>
-                <span style={{ fontSize: '12px', color: '#6c757d', marginLeft: '12px' }}>
+                <span style={{ fontSize: '12px', color: 'var(--gray)', marginLeft: '12px' }}>
                   {new Date(user.date_joined).toLocaleDateString()}
                 </span>
               </div>
             ))}
           </div>
-          <div style={{ background: 'white', borderRadius: '12px', padding: '20px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
+          <div className="card">
             <h3 style={{ marginBottom: '16px', fontSize: '16px' }}>Recent Crime Reports</h3>
             {stats.recent_activity.recent_crimes?.map((crime, i) => (
-              <div key={i} style={{ padding: '8px 0', borderBottom: '1px solid #f0f0f0' }}>
+              <div key={i} style={{ padding: '8px 0', borderBottom: '1px solid var(--border)' }}>
                 <span>{crime.category}</span>
-                <span style={{ fontSize: '12px', color: '#6c757d', marginLeft: '12px' }}>
+                <span className="badge badge-info" style={{ marginLeft: '12px' }}>
                   {crime.status}
                 </span>
               </div>

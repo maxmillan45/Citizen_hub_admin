@@ -52,7 +52,7 @@ function Login() {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      background: 'linear-gradient(135deg, #1a1a1a 0%, #333333 50%, #1a1a1a 100%)',
+      background: 'linear-gradient(135deg, #f5f5f5 0%, #e8f5e9 100%)',
     }}>
       <div style={{
         background: 'white',
@@ -60,7 +60,7 @@ function Login() {
         borderRadius: '16px',
         width: '100%',
         maxWidth: '420px',
-        boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+        boxShadow: '0 20px 60px rgba(0,0,0,0.1)',
         borderTop: '4px solid #BB0000'
       }}>
         <div style={{ textAlign: 'center', marginBottom: '32px' }}>
@@ -84,12 +84,7 @@ function Login() {
           }}>
             Citizen Hub
           </h1>
-          <p style={{
-            color: '#666',
-            fontSize: '14px'
-          }}>
-            Admin Panel
-          </p>
+          <p style={{ color: '#666', fontSize: '14px' }}>Admin Panel</p>
           <div style={{
             width: '60px',
             height: '3px',
@@ -151,13 +146,7 @@ function Login() {
             type="submit"
             className="btn-primary"
             disabled={loading}
-            style={{
-              width: '100%',
-              justifyContent: 'center',
-              padding: '14px',
-              fontSize: '16px',
-              background: 'linear-gradient(135deg, #006B3F 0%, #004D2E 100%)'
-            }}
+            style={{ width: '100%', justifyContent: 'center', padding: '14px' }}
           >
             {loading ? 'Signing in...' : 'Sign In'}
           </button>

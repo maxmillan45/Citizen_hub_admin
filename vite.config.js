@@ -9,7 +9,12 @@ export default defineConfig({
   },
   preview: {
     host: '0.0.0.0',
-    port: 10000
+    port: 10000,
+    allowedHosts: [
+      'citizen-hub-admin.onrender.com',
+      'localhost',
+      '127.0.0.1'
+    ]
   },
   build: {
     outDir: 'dist'

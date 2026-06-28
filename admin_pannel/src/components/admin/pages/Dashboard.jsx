@@ -53,7 +53,7 @@ function Dashboard() {
 
   return (
     <div>
-      <h1 className="admin-page-title">Admin Dashboard</h1>
+      <h1 className="admin-page-title">Dashboard</h1>
       <p className="admin-page-subtitle">Overview of your Citizen Hub platform</p>
 
       <div className="admin-stats-grid">
@@ -64,7 +64,7 @@ function Dashboard() {
               <div className="stat-icon" style={{ background: `${card.color}15` }}>
                 <Icon size={24} color={card.color} />
               </div>
-              <div className="stat-value">{card.value}</div>
+              <div className="stat-value" style={{ color: card.color }}>{card.value}</div>
               <div className="stat-label">{card.label}</div>
             </div>
           );
@@ -74,7 +74,7 @@ function Dashboard() {
       {stats?.recent_activity && (
         <div className="grid-2">
           <div className="card">
-            <h3 style={{ marginBottom: '16px', fontSize: '16px', color: '#1a1a1a' }}>Recent Users</h3>
+            <h3 style={{ marginBottom: '16px', fontSize: '16px' }}>Recent Users</h3>
             {stats.recent_activity.new_users?.map((user, i) => (
               <div key={i} style={{ padding: '8px 0', borderBottom: '1px solid #e0e0e0' }}>
                 <span>{user.phone_number}</span>
@@ -85,7 +85,7 @@ function Dashboard() {
             ))}
           </div>
           <div className="card">
-            <h3 style={{ marginBottom: '16px', fontSize: '16px', color: '#1a1a1a' }}>Recent Crime Reports</h3>
+            <h3 style={{ marginBottom: '16px', fontSize: '16px' }}>Recent Crime Reports</h3>
             {stats.recent_activity.recent_crimes?.map((crime, i) => (
               <div key={i} style={{ padding: '8px 0', borderBottom: '1px solid #e0e0e0' }}>
                 <span>{crime.category}</span>

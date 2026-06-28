@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FiUser, FiLock, FiAlertCircle } from 'react-icons/fi';
+import { FiUser, FiAlertCircle } from 'react-icons/fi';
 
 function Login() {
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -46,23 +46,57 @@ function Login() {
   };
 
   return (
-    <div className="admin-login-container">
-      <div className="admin-login-card">
-        <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+    <div style={{
+      minHeight: '100vh',
+      width: '100%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      background: 'linear-gradient(135deg, #1a1a1a 0%, #333333 50%, #1a1a1a 100%)',
+    }}>
+      <div style={{
+        background: 'white',
+        padding: '48px',
+        borderRadius: '16px',
+        width: '100%',
+        maxWidth: '420px',
+        boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+        borderTop: '4px solid #BB0000'
+      }}>
+        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
           <div style={{
-            width: '64px',
-            height: '64px',
-            background: 'var(--primary-light)',
+            width: '72px',
+            height: '72px',
+            background: '#e8f5e9',
             borderRadius: '50%',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            margin: '0 auto 12px'
+            margin: '0 auto 16px'
           }}>
-            <FiUser size={32} color="var(--primary)" />
+            <FiUser size={36} color="#006B3F" />
           </div>
-          <h1>Admin Panel</h1>
-          <p>Sign in to manage Citizen Hub</p>
+          <h1 style={{
+            fontSize: '28px',
+            fontWeight: '700',
+            color: '#1a1a1a',
+            marginBottom: '4px'
+          }}>
+            Citizen Hub
+          </h1>
+          <p style={{
+            color: '#666',
+            fontSize: '14px'
+          }}>
+            Admin Panel
+          </p>
+          <div style={{
+            width: '60px',
+            height: '3px',
+            background: 'linear-gradient(to right, #006B3F, #BB0000)',
+            margin: '12px auto 0',
+            borderRadius: '2px'
+          }}></div>
         </div>
 
         {error && (
@@ -70,11 +104,11 @@ function Login() {
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
-            background: '#FFEBEE',
-            color: '#C62828',
-            padding: '12px',
+            background: '#ffebee',
+            color: '#c62828',
+            padding: '12px 16px',
             borderRadius: '8px',
-            marginBottom: '16px',
+            marginBottom: '20px',
             fontSize: '14px'
           }}>
             <FiAlertCircle size={16} />
@@ -83,8 +117,14 @@ function Login() {
         )}
 
         <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: '16px' }}>
-            <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500', fontSize: '14px' }}>
+          <div style={{ marginBottom: '20px' }}>
+            <label style={{
+              display: 'block',
+              marginBottom: '6px',
+              fontWeight: '600',
+              fontSize: '14px',
+              color: '#1a1a1a'
+            }}>
               Phone Number
             </label>
             <div style={{ position: 'relative' }}>
@@ -93,7 +133,7 @@ function Login() {
                 left: '12px',
                 top: '50%',
                 transform: 'translateY(-50%)',
-                color: 'var(--gray)'
+                color: '#999'
               }} />
               <input
                 type="tel"
@@ -111,7 +151,13 @@ function Login() {
             type="submit"
             className="btn-primary"
             disabled={loading}
-            style={{ width: '100%', justifyContent: 'center' }}
+            style={{
+              width: '100%',
+              justifyContent: 'center',
+              padding: '14px',
+              fontSize: '16px',
+              background: 'linear-gradient(135deg, #006B3F 0%, #004D2E 100%)'
+            }}
           >
             {loading ? 'Signing in...' : 'Sign In'}
           </button>

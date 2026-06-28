@@ -1,18 +1,13 @@
-/* ===== CSS Variables ===== */
+/* ===== Kenyan Flag Colors ===== */
 :root {
-  --primary: #006B3F;
-  --primary-dark: #004D2E;
-  --primary-light: #E8F5E9;
-  --primary-gradient: linear-gradient(135deg, #006B3F 0%, #004D2E 100%);
-  --secondary: #BB0000;
-  --gold: #D4A017;
-  --dark: #1A1A1A;
-  --gray: #6c757d;
-  --light-gray: #f5f7fa;
-  --border: #e9ecef;
-  --white: #ffffff;
-  --shadow: 0 2px 8px rgba(0,0,0,0.06);
-  --shadow-hover: 0 8px 24px rgba(0,0,0,0.1);
+  --black: #1A1A1A;
+  --red: #BB0000;
+  --green: #006B3F;
+  --white: #FFFFFF;
+  --light-gray: #F5F5F5;
+  --border: #E0E0E0;
+  --shadow: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-hover: 0 8px 24px rgba(0,0,0,0.12);
   --radius: 12px;
   --radius-sm: 8px;
   --transition: all 0.3s ease;
@@ -25,17 +20,45 @@
   box-sizing: border-box;
 }
 
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
 body {
   font-family: var(--font-family);
   background: var(--light-gray);
-  color: var(--dark);
+  color: var(--black);
   line-height: 1.6;
+  min-height: 100vh;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
+/* ===== Kenyan Flag Header Bar ===== */
+.flag-bar {
+  height: 6px;
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+}
+
+.flag-bar-black {
+  flex: 1;
+  background: var(--black);
+}
+.flag-bar-red {
+  flex: 1;
+  background: var(--red);
+}
+.flag-bar-green {
+  flex: 1;
+  background: var(--green);
+}
+.flag-bar-white {
+  flex: 1;
+  background: var(--white);
 }
 
 /* ===== Buttons ===== */
@@ -44,7 +67,7 @@ body {
   align-items: center;
   gap: 8px;
   padding: 12px 24px;
-  background: var(--primary-gradient);
+  background: var(--green);
   color: var(--white);
   border: none;
   border-radius: var(--radius-sm);
@@ -56,6 +79,7 @@ body {
 }
 
 .btn-primary:hover {
+  background: #004D2E;
   transform: translateY(-2px);
   box-shadow: var(--shadow-hover);
 }
@@ -71,8 +95,8 @@ body {
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  background: var(--light-gray);
-  color: var(--dark);
+  background: var(--white);
+  color: var(--black);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   font-weight: 500;
@@ -81,7 +105,7 @@ body {
 }
 
 .btn-secondary:hover {
-  background: var(--border);
+  background: var(--light-gray);
 }
 
 .btn-danger {
@@ -89,7 +113,7 @@ body {
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  background: var(--secondary);
+  background: var(--red);
   color: var(--white);
   border: none;
   border-radius: var(--radius-sm);
@@ -99,7 +123,7 @@ body {
 }
 
 .btn-danger:hover {
-  opacity: 0.9;
+  background: #990000;
 }
 
 /* ===== Cards ===== */
@@ -126,26 +150,13 @@ body {
   font-family: var(--font-family);
   transition: var(--transition);
   background: var(--white);
-  color: var(--dark);
+  color: var(--black);
 }
 
 .input-field:focus {
   outline: none;
-  border-color: var(--primary);
+  border-color: var(--green);
   box-shadow: 0 0 0 3px rgba(0, 107, 63, 0.1);
-}
-
-.input-field:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-select.input-field {
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236c757d' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  padding-right: 36px;
 }
 
 /* ===== Tables ===== */
@@ -164,28 +175,27 @@ select.input-field {
 }
 
 .table thead {
-  background: var(--light-gray);
+  background: var(--black);
+  color: var(--white);
 }
 
 .table th {
   padding: 12px 16px;
   text-align: left;
   font-weight: 600;
-  color: var(--dark);
-  border-bottom: 2px solid var(--border);
 }
 
 .table td {
   padding: 12px 16px;
   border-bottom: 1px solid var(--border);
-  color: var(--dark);
+  color: var(--black);
 }
 
 .table tbody tr:hover {
   background: var(--light-gray);
 }
 
-/* ===== Status Badges ===== */
+/* ===== Badges ===== */
 .badge {
   display: inline-block;
   padding: 2px 12px;
@@ -196,12 +206,12 @@ select.input-field {
 
 .badge-success {
   background: #E8F5E9;
-  color: #2E7D32;
+  color: var(--green);
 }
 
 .badge-danger {
   background: #FFEBEE;
-  color: #C62828;
+  color: var(--red);
 }
 
 .badge-warning {
@@ -219,6 +229,11 @@ select.input-field {
   color: #666;
 }
 
+.badge-black {
+  background: var(--black);
+  color: var(--white);
+}
+
 /* ===== Loading Spinner ===== */
 .spinner {
   display: inline-block;
@@ -226,7 +241,7 @@ select.input-field {
   height: 40px;
   border: 3px solid var(--border);
   border-radius: 50%;
-  border-top-color: var(--primary);
+  border-top-color: var(--green);
   animation: spin 0.8s linear infinite;
 }
 
@@ -281,12 +296,12 @@ select.input-field {
 .stat-card .stat-value {
   font-size: 28px;
   font-weight: 700;
-  color: var(--dark);
+  color: var(--black);
 }
 
 .stat-card .stat-label {
   font-size: 14px;
-  color: var(--gray);
+  color: #666;
   margin-top: 4px;
 }
 
@@ -310,51 +325,77 @@ select.input-field {
 }
 
 .admin-page-title {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 700;
-  color: var(--dark);
+  color: var(--black);
   margin-bottom: 8px;
 }
 
 .admin-page-subtitle {
-  color: var(--gray);
+  color: #666;
   margin-bottom: 24px;
+  font-size: 16px;
 }
 
+/* ===== Login Page ===== */
 .admin-login-container {
   min-height: 100vh;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--primary-gradient);
+  background: var(--white);
 }
 
 .admin-login-card {
   background: var(--white);
-  padding: 40px;
+  padding: 48px 40px;
   border-radius: 16px;
   width: 100%;
-  max-width: 400px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  max-width: 420px;
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
 }
 
 .admin-login-card h1 {
   font-size: 28px;
-  color: var(--dark);
+  color: var(--black);
   margin-bottom: 8px;
 }
 
 .admin-login-card p {
-  color: var(--gray);
+  color: #666;
   margin-bottom: 24px;
 }
 
+.admin-login-card .flag-stripes {
+  display: flex;
+  height: 4px;
+  margin-bottom: 24px;
+}
+
+.admin-login-card .flag-stripes .stripe-black {
+  flex: 1;
+  background: var(--black);
+}
+.admin-login-card .flag-stripes .stripe-red {
+  flex: 1;
+  background: var(--red);
+}
+.admin-login-card .flag-stripes .stripe-green {
+  flex: 1;
+  background: var(--green);
+}
+
+/* ===== Sidebar ===== */
 .admin-sidebar {
   width: 260px;
-  background: var(--dark);
+  background: var(--black);
   color: var(--white);
   height: 100vh;
   position: fixed;
+  top: 6px;
+  left: 0;
   overflow: hidden;
   transition: width 0.3s ease;
   z-index: 1000;
@@ -366,7 +407,7 @@ select.input-field {
 
 .admin-sidebar-header {
   padding: 16px 20px;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -376,6 +417,14 @@ select.input-field {
   font-size: 18px;
   font-weight: 700;
   white-space: nowrap;
+  color: var(--white);
+}
+
+.admin-sidebar-header .logo-text span.green {
+  color: var(--green);
+}
+.admin-sidebar-header .logo-text span.red {
+  color: var(--red);
 }
 
 .admin-nav-item {
@@ -396,18 +445,45 @@ select.input-field {
 }
 
 .admin-nav-item.active {
-  background: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.08);
   color: var(--white);
-  border-left-color: var(--primary);
+  border-left-color: var(--green);
+}
+
+.admin-nav-item .nav-icon {
+  width: 20px;
+  text-align: center;
 }
 
 .admin-main-content {
   margin-left: 260px;
-  padding: 24px;
+  padding: 24px 32px;
   min-height: 100vh;
+  margin-top: 6px;
   transition: margin-left 0.3s ease;
+  background: var(--light-gray);
+  width: calc(100% - 260px);
 }
 
 .admin-main-content.expanded {
   margin-left: 72px;
+  width: calc(100% - 72px);
+}
+
+/* ===== Sidebar User Section ===== */
+.sidebar-user {
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  margin-top: auto;
+}
+
+.sidebar-user .user-phone {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--white);
+}
+
+.sidebar-user .user-role {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
 }
